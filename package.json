@@ -6,6 +6,7 @@
   "scripts": {
     "clean": "rm -rf ./dist ./build",
     "compile": "babel src --out-dir dist",
+    "watch": "npm run clean && babel src --out-dir dist --watch",
     "build": "npm run clean && npm run compile",
     "start": "npm run compile && node-lambda run",
     "package": "npm run build && node-lambda package -n crypto-get-market-data",
@@ -20,6 +21,8 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
-    "fecha": "^2.3.2"
+    "fecha": "^2.3.2",
+    "lodash": "^4.17.4",
+    "zaif.jp": "^0.1.16"
   }
 }
