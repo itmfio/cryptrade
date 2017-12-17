@@ -10,6 +10,7 @@
     "build": "npm run clean && npm run compile",
     "start": "npm run compile && node-lambda run",
     "package": "npm run build && node-lambda package -n crypto-get-market-data",
+    "deploy": "npm run build && node-lambda deploy -n crypto-notify-account-info",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -23,6 +24,7 @@
     "axios": "^0.17.1",
     "fecha": "^2.3.2",
     "lodash": "^4.17.4",
+    "underscore.string": "^3.3.4",
     "zaif.jp": "^0.1.16"
   }
 }

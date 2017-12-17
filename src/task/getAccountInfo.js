@@ -4,9 +4,10 @@ import _ from "lodash"
 const apiKey = process.env.ZAIF_API_KEY
 const apiSecret = process.env.ZAIF_API_SECRET
 
+const publicApi = zaif.PublicApi
 const privateApi = zaif.createPrivateApi(apiKey, apiSecret, 'node-zaif')
 
-export default function (event, context, callback) {
+export default function () {
   return privateApi.getInfo().then((accountInfo) => {
     const requestList = _.map(accountInfo.deposit, (value, ccy) => {
       // 円の場合はそのまま返す
@@ -21,7 +22,7 @@ export default function (event, context, callback) {
         return
       }
       // 円転評価額を算出
-      return api.ticker(ccy + "_jpy").then((ticker) => {
+      return publicApi.ticker(ccy + "_jpy").then((ticker) => {
           return {
             ccy,
             value: ticker.bid * value
