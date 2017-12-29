@@ -34,7 +34,7 @@ export default function () {
       const results = {}
       allResult.forEach((values) => {
         if (values != null) {
-          results[values.ccy] = values.value
+          results[values.ccy.toLowerCase()] = values.value
         }
       })
       return results
