@@ -4,14 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "clean": "rm -rf ./dist ./build",
+    "clean": "rm -rf ./dist ./build ./dist-test",
     "compile": "babel src --out-dir dist",
+    "compile-test": "babel test --out-dir dist-test",
     "watch": "npm run clean && babel src --out-dir dist --watch",
-    "build": "npm run clean && npm run compile",
+    "watch-test": "babel test --out-dir dist-test --watch",
+    "build": "npm run clean && npm run compile && npm run compile-test",
     "start": "npm run compile && node-lambda run",
-    "package": "npm run build && node-lambda package -n crypto-get-market-data",
-    "deploy": "npm run build && node-lambda deploy -n crypto-notify-account-info",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "package": "npm run build && node-lambda package",
+    "deploy": "npm run build && node-lambda deploy",
+    "test": "mocha dist-test/**/*Spec.js"
   },
   "author": "",
   "license": "ISC",
