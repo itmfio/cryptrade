@@ -18,6 +18,7 @@ export default class SlackService {
         text: message
     };
     return this.decryptHookUrl().then((hookUrl) => {
+      console.log("hookUrl=" + hookUrl)
       return axios.post(hookUrl, slackMessage)
     })
   }
@@ -39,7 +40,7 @@ export default class SlackService {
   callackToSlack(event, callback, commandDispatcher) {
       const params = qs.parse(event.body);
       const requestToken = params.token;
-      if (requestToken !== token) {
+      if (requestToken !== this.token) {
           console.error(`Request token (${requestToken}) does not match expected`);
           throw new Error('Invalid request token')
       }
@@ -72,6 +73,7 @@ export default class SlackService {
    */
   decryptToken() {
     if (this.token) {
+      console.log(`Token is exist ${this.token}`)
       return new Promise((resolve) => resolve(this.token))
     }
     if (!kmsEncryptedToken || kmsEncryptedToken === '<kmsEncryptedToken>') {
@@ -79,7 +81,7 @@ export default class SlackService {
     }
     const cipherText = { CiphertextBlob: new Buffer(kmsEncryptedToken, 'base64') };
     const kms = new AWS.KMS();
-    return kms.decrypt(cipherText).promise.then((data) => {
+    return kms.decrypt(cipherText).promise().then((data) => {
         this.token = data.Plaintext.toString('ascii');
         return this.token
     });

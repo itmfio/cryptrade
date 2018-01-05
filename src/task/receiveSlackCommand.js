@@ -11,12 +11,15 @@ export default function (event, context, callback) {
     const command = params.command;
     // const channel = params.channel_name;
     // const commandText = params.text;
-    console.log(command)
     if (command === '/account') {
       return accountService.getTotalAccountInfoMessage()
+        .then(slackService.notifyToSlack.bind(slackService))
+        .then(() => {
+          return null
+        })
     }
     throw new Error(`Invalid command ${command}`)
   }).then(() => {
-      console.log("Success all")      
+      console.log("Success all")
   }).catch(callback)
 }

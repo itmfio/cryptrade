@@ -107,7 +107,7 @@ export default class AccountService {
       _(merged.ccy).toPairs().sortBy((pair) => -pair[1]).value().forEach((pair) => {
         messages.push([pair[0].toUpperCase(), pair[1]])
       })
-
+      console.log("get account info:" + merged.all)
       return messages.map((pair) => {
         if (pair.length == 0) {
           return '----'
